@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panorama with Navigation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+    #panorama {
+        width: 600px;
+        height: 400px;
+    }
+    .custom-hotspot {
+        width: 30px;
+        height: 30px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .custom-hotspot::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 15px solid white;
+    }
+    </style>
+</head>
+<body>
+
+<div id="panorama"></div>
+<script>
+let savedView = {
+  yaw: 0,
+  pitch: 0
+};
+
+window.viewer = pannellum.viewer('panorama', {
+    "default": {
+        "firstScene": "bottom-stairwell",
+        "sceneFadeDuration": 1000
+    },
+    "scenes": {
+        /*"scene1": {
+            "title": "First Panorama",
+            "type": "cubemap",
+            "cubeMap": [
+                "/epc-a1/media/drone/pano_f.jpg", // right face
+                "/epc-a1/media/drone/pano_r.jpg", // left face
+                "/epc-a1/media/drone/pano_b.jpg", // up face
+                "/epc-a1/media/drone/pano_l.jpg", // down face
+                "/epc-a1/media/drone/pano_u.jpg", // front face
+                "/epc-a1/media/drone/pano_d.jpg"  // back face
+            ],
+            "hotSpots": [
+                {
+                    "pitch": 0,
+                    "yaw": 88,
+                    "type": "scene",
+                    "text": "Go to second panorama",
+                    "sceneId": "scene2"
+                }
+            ]
+        },
+        "scene2": {
+            "title": "Second Panorama",
+            "type": "equirectangular",
+            "panorama": "/epc-a1/media/test-r1/360-1.jpg", // Make sure this path is correct
+            "hotSpots": [
+                {
+                    "pitch": 0,
+                    "yaw": 210,
+                    "type": "scene",  // Changed to built-in scene type
+                    "text": "Back to first panorama",
+                    "sceneId": "scene1"  // This automatically links back to first scene
+                }
+            ]
+        }*/
+       "bottom-stairwell": {
+            "title": "Bottom Stairwell",
+            "type": "equirectangular",
+            "panorama": "/epc-a1/media/test-r2/bottom-stairwell.jpg",
+            "hotSpots": [
+                {
+                    "pitch": 0,
+                    "yaw": 65,
+                    "type": "scene", 
+                    "text": "Living Room",
+                    "clickHandlerFunc": function() {window.loadScene("livingroom-1")}
+                },
+                {
+                    "pitch": 0,
+                    "yaw": -15,
+                    "type": "scene", 
+                    "text": "Foyer",
+                    "clickHandlerFunc": function() {window.loadScene("foyer")}
+                }
+            ]
+        },
+        "foyer": { 
+            "title": "Foyer",
+            "type": "equirectangular",
+            "panorama": "/epc-a1/media/test-r2/foyer.jpg",
+            "hotSpots": [
+                {
+                    "pitch": 0,
+                    "yaw": -120,
+                    "type": "scene", 
+                    "text": "Bottom Stairwell",
+                    "clickHandlerFunc": function() {window.loadScene("bottom-stairwell")}
+                }
+            ]
+        },
+        "livingroom-1": {
+            "title": "Living Room",
+            "type": "equirectangular",
+            "panorama": "/epc-a1/media/test-r2/livingroom-1.jpg", 
+            "hotSpots": [
+                {
+                    "pitch": 0,
+                    "yaw": 200,
+                    "type": "scene",
+                    "text": "Bottom Stairwell",
+                    "clickHandlerFunc": function() {window.loadScene("bottom-stairwell")}
+                },
+                {
+                    "pitch": 0,
+                    "yaw": 15,
+                    "type": "scene",
+                    "text": "Living Room",
+                    "clickHandlerFunc": function() {window.loadScene("livingroom-2")}
+                }
+            ]
+        },
+        "livingroom-2": {
+            "title": "Living Room",
+            "type": "equirectangular",
+            "panorama": "/epc-a1/media/test-r2/livingroom-2.jpg", 
+            "hotSpots": [
+                {
+                    "pitch": 0,
+                    "yaw": 210,
+                    "type": "scene",
+                    "text": "Living Room",
+                    "clickHandlerFunc": function() {window.loadScene("livingroom-1")}
+                }
+            ]
+        },
+    },
+
+});
+
+loadScene = function (id) {
+    let currentPitch = window.viewer.getPitch();
+    let currentYaw = window.viewer.getYaw();
+    let currentHFov = window.viewer.getHfov();
+    window.viewer.loadScene(id, currentPitch, currentYaw, currentHFov, 0, function() {console.log("Switched!");});
+                    
+}
+</script>
+
+</body>
+</html>
