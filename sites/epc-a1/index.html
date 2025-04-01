@@ -10,6 +10,7 @@
     #panorama {
         width: 600px;
         height: 400px;
+        position: relative;
     }
     .custom-hotspot {
         width: 30px;
@@ -29,11 +30,41 @@
         border-bottom: 10px solid transparent;
         border-left: 15px solid white;
     }
+    .rectangle-overlay {
+        width: 50px;
+        height: 30px;
+        background-color: rgba(255, 0, 0, 0.5);
+        border: 2px solid white;
+    }
+    
+    /* New overlay styles */
+    .center-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 160px;
+        height: 80px;
+        background-color: rgba(255, 0, 0, 0.7);
+        border: 2px solid white;
+        border-radius: 50%;
+        pointer-events: none; /* Allow clicks to pass through */
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+    }
     </style>
 </head>
 <body>
 
-<div id="panorama"></div>
+<div id="panorama-container" style="position: relative;">
+    <div id="panorama"></div>
+    <div id="center-overlay" class="center-overlay">Overlay Text</div>
+</div>
+
 <script>
 let savedView = {
   yaw: 0,
@@ -46,41 +77,6 @@ window.viewer = pannellum.viewer('panorama', {
         "sceneFadeDuration": 1000
     },
     "scenes": {
-        /*"scene1": {
-            "title": "First Panorama",
-            "type": "cubemap",
-            "cubeMap": [
-                "/epc-a1/media/drone/pano_f.jpg", // right face
-                "/epc-a1/media/drone/pano_r.jpg", // left face
-                "/epc-a1/media/drone/pano_b.jpg", // up face
-                "/epc-a1/media/drone/pano_l.jpg", // down face
-                "/epc-a1/media/drone/pano_u.jpg", // front face
-                "/epc-a1/media/drone/pano_d.jpg"  // back face
-            ],
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 88,
-                    "type": "scene",
-                    "text": "Go to second panorama",
-                    "sceneId": "scene2"
-                }
-            ]
-        },
-        "scene2": {
-            "title": "Second Panorama",
-            "type": "equirectangular",
-            "panorama": "/epc-a1/media/test-r1/360-1.jpg", // Make sure this path is correct
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 210,
-                    "type": "scene",  // Changed to built-in scene type
-                    "text": "Back to first panorama",
-                    "sceneId": "scene1"  // This automatically links back to first scene
-                }
-            ]
-        }*/
        "bottom-stairwell": {
             "title": "Bottom Stairwell",
             "type": "equirectangular",
@@ -99,6 +95,12 @@ window.viewer = pannellum.viewer('panorama', {
                     "type": "scene", 
                     "text": "Foyer",
                     "clickHandlerFunc": function() {window.loadScene("foyer")}
+                },
+                {
+                    "pitch": 0,
+                    "yaw": 50,
+                    "cssClass": "custom-hotspot",
+                    "createTooltipFunc": hotspotMaker
                 }
             ]
         },
@@ -152,16 +154,49 @@ window.viewer = pannellum.viewer('panorama', {
             ]
         },
     },
-
 });
 
 loadScene = function (id) {
     let currentPitch = window.viewer.getPitch();
     let currentYaw = window.viewer.getYaw();
     let currentHFov = window.viewer.getHfov();
-    window.viewer.loadScene(id, currentPitch, currentYaw, currentHFov, 0, function() {console.log("Switched!");});
-                    
+    window.viewer.loadScene(id, currentPitch, currentYaw, currentHFov, 0, function() {console.log("Switched!");});                   
 }
+
+function hotspotMaker(hotSpotDiv) {
+    // Create a rectangle
+    hotSpotDiv.classList.add('rectangle-overlay');
+    // Or add text
+    hotSpotDiv.innerText = "Your text here";
+}
+
+// Position the overlay to be centered on the panorama
+function positionOverlay() {
+    const panoramaElement = document.getElementById('panorama');
+    const overlayElement = document.getElementById('center-overlay');
+    
+    if (panoramaElement && overlayElement) {
+        const panoramaRect = panoramaElement.getBoundingClientRect();
+        
+        // Set the container to match the panorama dimensions
+        const container = document.getElementById('panorama-container');
+        container.style.width = panoramaRect.width + 'px';
+        container.style.height = panoramaRect.height + 'px';
+    }
+}
+
+// Call this when the viewer is loaded
+window.viewer.on('load', function() {
+    positionOverlay();
+});
+
+// Make sure overlay stays positioned correctly if window is resized
+window.addEventListener('resize', positionOverlay);
+
+// Initial positioning
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(positionOverlay, 100); // Small delay to ensure Pannellum is initialized
+});
 </script>
 
 </body>
