@@ -89,15 +89,61 @@ function initializeSchoolTour() {
 				{ pitch: 0, yaw: -90, idToCall: "213", text: "Forward" }, // Forward
 				{ pitch: 10, yaw: -118, idToCall: "193", text: "Up" },	// Stair
 			])
-			addScene("L Block - Stairs", "193", [
-				{ pitch: -20, yaw: -105, idToCall: "211", text: "Down" },	
-			])
 			addScene("L Block - 1st Floor", "213", [
 				{ pitch: 0, yaw: 10, idToCall: "215", text: "Forward" },
 				{ pitch: 0, yaw: 190, idToCall: "211", text: "Back" },
 			])
 			addScene("L Block - 1st Floor", "215", [
 				{ pitch: 0, yaw: 180, idToCall: "213", text: "Back" },
+			])
+		// Floor 2
+			addScene("L Block - 2nd Floor - Stairs", "193", [
+				{ pitch: -20, yaw: -105, idToCall: "211", text: "Down" },
+				{ pitch: 0, yaw: -190, idToCall: "195", text: "Forward" },
+				{ pitch: 0, yaw: -82, idToCall: "191", text: "Forward" },		
+			])
+			// L11 Pathway
+			addScene("L Block - 2nd Floor", "195", [
+				{ pitch: -0, yaw: -90, idToCall: "193", text: "Back" },
+				{ pitch: -0, yaw: 100, idToCall: "197", text: "Forward" },	
+			])
+			addScene("L Block - 2nd Floor", "197", [
+				{ pitch: -0, yaw: -90, idToCall: "195", text: "Back" },
+				{ pitch: -0, yaw: 100, idToCall: "199", text: "Forward" },	
+			])
+			addScene("L Block - 2nd Floor", "199", [
+				{ pitch: -0, yaw: -60, idToCall: "197", text: "Back" },
+				{ pitch: -0, yaw: 75, idToCall: "201", text: "Inside" },
+				{ pitch: -20, yaw: -90, idToCall: "197", text: "Down" },	
+			])
+			addScene("L Block - Classroom 2", "201", [
+				{ pitch: 0, yaw: -20, idToCall: "197", text: "Outside" },	
+			])
+
+			// L19 Pathway
+			addScene("L Block - 2nd Floor", "191", [
+				{ pitch: 0, yaw: -130, idToCall: "187", text: "Forward" },
+				{ pitch: 0, yaw: -95, idToCall: "189", text: "inside" },	
+				{ pitch: 0, yaw: 80, idToCall: "193", text: "Forward" },	
+			])
+
+			addScene("L Block - Classroom 1", "189", [
+				{ pitch: 0, yaw: 160, idToCall: "191", text: "Outside" },	
+			])
+			
+			addScene("L Block - 2nd Floor", "187", [
+				{ pitch: 0, yaw: 120, idToCall: "191", text: "Forward" },
+				{ pitch: 0, yaw: -27, idToCall: "189", text: "inside" },	
+				{ pitch: 0, yaw: -130, idToCall: "185", text: "Forward" },	
+			])
+
+			addScene("L Block - 2nd Floor", "185", [
+				{ pitch: 0, yaw: -35, idToCall: "187", text: "Forward" },	
+				{ pitch: 0, yaw: -178, idToCall: "183", text: "Forward" },	
+			])
+			addScene("L Block - 2nd Floor", "183", [
+				{ pitch: 0, yaw: -0, idToCall: "185", text: "Forward" },	
+				{ pitch: 0, yaw: 167, idToCall: "x", text: "Forward (TODO)" },	
 			])
 
 
