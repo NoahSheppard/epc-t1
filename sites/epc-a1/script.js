@@ -203,18 +203,114 @@ function loadScene(id) {
 		console.error(`Error loading scene ${id}:`, error);
 	}
 }
+
+// Add review functionality
+function initializeReviewSystem() {
+    const reviewTrigger = document.getElementById('center-overlay');
+    const reviewPopup = document.getElementById('review-popup');
+    const backdrop = document.getElementById('overlay-backdrop');
+    const closeButton = document.getElementById('popup-close');
+    const reviewForm = document.getElementById('review-form');
+    
+    console.log("Review elements:", {
+        trigger: reviewTrigger,
+        popup: reviewPopup,
+        backdrop: backdrop,
+        closeButton: closeButton,
+        form: reviewForm
+    });
+    
+    if (!reviewTrigger || !reviewPopup || !backdrop || !closeButton || !reviewForm) {
+        console.error("Missing review elements!");
+        return;
+    }
+    
+    // Show popup
+    reviewTrigger.addEventListener('click', () => {
+        console.log("Review button clicked");
+        reviewPopup.style.display = 'block';
+        backdrop.style.display = 'block';
+    });
+    
+    // Close popup
+    closeButton.addEventListener('click', () => {
+        reviewPopup.style.display = 'none';
+        backdrop.style.display = 'none';
+    });
+    
+    // Close popup if clicking backdrop
+    backdrop.addEventListener('click', () => {
+        reviewPopup.style.display = 'none';
+        backdrop.style.display = 'none';
+    });
+    
+    // Handle form submission
+    reviewForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('review-name').value;
+        const description = document.getElementById('review-description').value;
+        
+        // Get rating value (if selected)
+        const ratingInputs = document.querySelectorAll('input[name="rating"]');
+        let rating = null;
+        for (const input of ratingInputs) {
+            if (input.checked) {
+                rating = input.value;
+                break;
+            }
+        }
+        
+        // Call the sendReview function
+        sendReview(name, rating, description);
+        
+        // Reset form and close popup
+        reviewForm.reset();
+        reviewPopup.style.display = 'none';
+        backdrop.style.display = 'none';
+        
+        // Temporary alert since sendReview is not implemented yet
+        alert(`Thank you, ${name}! Your review has been submitted.`);
+    });
+    
+    console.log("Review system initialized successfully!");
+}
+
+// Placeholder for the sendReview function to be implemented later
+function sendReview(name, rating, description) {
+    console.log("Review submission:", { name, rating, description });
+    // This function will be implemented later by the user
+}
+
 function initializeVirtualTour() {
-	window.viewer = pannellum.viewer('panorama', {
-		"default": {
-			"firstScene": "73",
-			"sceneFadeDuration": 1000,
-			"autoLoad": true
-		},
-		"scenes": Object.assign({}, scenes)
-	});
-	initializeSchoolTour();
-	console.log("Virtual tour initialized successfully!");
-	console.log(scenes);
+    window.viewer = pannellum.viewer('panorama', {
+        "default": {
+            "firstScene": "73",
+            "sceneFadeDuration": 1000,
+            "autoLoad": true
+        },
+        "scenes": Object.assign({}, scenes)
+    });
+    
+    // Initialize the tour
+    initializeSchoolTour();
+    
+    // Initialize the review system immediately after DOM is fully loaded
+    // Don't rely on Pannellum's events which might not work as expected
+    document.addEventListener('DOMContentLoaded', function() {
+        // Run review system initialization 
+        initializeReviewSystem();
+    });
+    
+    // As a fallback, also try to initialize after a short delay
+    setTimeout(initializeReviewSystem, 500);
+    
+    console.log("Virtual tour initialized successfully!");
+}
+
+// If window is already loaded when this script runs, initialize immediately
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initializeReviewSystem, 100);
 }
 
 window.onload = initializeVirtualTour;

@@ -20,3 +20,147 @@
     border-bottom: 10px solid transparent;
     border-left: 15px solid white;
 }
+
+/* Styles for the review trigger button */
+#center-overlay {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 75px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    transition: all 0.2s ease;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 1.2;
+}
+
+#center-overlay:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Styles for the review popup */
+#review-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    border-radius: 15px;
+    z-index: 2000;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    display: none;
+}
+
+#review-popup h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+#review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+}
+
+#review-form > div {
+    width: 90%;
+    max-width: 320px;
+}
+
+#review-form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#review-form input,
+#review-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#review-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    width: 100%;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ddd;
+    margin-right: 5px;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #ffcc00;
+}
+
+#review-submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 80%;
+    max-width: 200px;
+}
+
+#review-submit-btn:hover {
+    background-color: #3e8e41;
+}
+
+#popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+    font-weight: bold;
+}
+
+#overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1500;
+    display: none;
+}
