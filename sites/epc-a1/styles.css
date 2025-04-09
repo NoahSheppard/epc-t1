@@ -21,6 +21,18 @@
     border-left: 15px solid white;
 }
 
+/* Larger hotspot styling - to be applied via JavaScript instead */
+.enhanced-hotspot {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7) !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.pnlm-hotspot-base {
+    transform: scale(1.5);
+    /*transform-origin: center center !important;
+    /* Removed fixed width and height */
+}
+
 /* Styles for the review trigger button */
 #center-overlay {
     position: fixed;
@@ -63,11 +75,13 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     padding: 20px;
     display: none;
+    font-family: Arial, sans-serif;
 }
 
 #review-popup h2 {
     margin-top: 0;
     text-align: center;
+    font-family: Arial, sans-serif;
 }
 
 #review-form {
@@ -76,17 +90,20 @@
     gap: 15px;
     align-items: center;
     text-align: center;
+    font-family: Arial, sans-serif;
 }
 
 #review-form > div {
     width: 90%;
     max-width: 320px;
+    font-family: Arial, sans-serif;
 }
 
 #review-form label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
+    font-family: Arial, sans-serif;
 }
 
 #review-form input,
@@ -96,6 +113,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 #review-form textarea {
@@ -119,6 +137,7 @@
     font-size: 30px;
     color: #ddd;
     margin-right: 5px;
+    font-family: Arial, sans-serif;
 }
 
 .star-rating label:hover,
@@ -138,6 +157,7 @@
     margin-top: 10px;
     width: 80%;
     max-width: 200px;
+    font-family: Arial, sans-serif;
 }
 
 #review-submit-btn:hover {
@@ -152,6 +172,7 @@
     cursor: pointer;
     color: #555;
     font-weight: bold;
+    font-family: Arial, sans-serif;
 }
 
 #overlay-backdrop {

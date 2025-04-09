@@ -279,9 +279,46 @@ function initializeReviewSystem() {
 // Placeholder for the sendReview function to be implemented later
 function sendReview(name, rating, description) {
     console.log("Review submission:", { name, rating, description });
-    // This function will be implemented later by the user
+    // This function will essentially send the review data to a server or API
+	// For now, we'll just log it to the console
+	// For example, using fetch to send a POST request to your server
+	// fetch('/submit-review', {
+	//     method: 'POST',
+	//     headers: {
+	//         'Content-Type': 'application/json'
+	//     },
+	//     body: JSON.stringify({ name, rating, description })
+	// })
+	// .then(response => response.json())
+	// .then(data => console.log("Review submitted successfully:", data))
+	// .catch(error => console.error("Error submitting review:", error));
+	// I would much rather use Axios but this is a school project and I don't want to add a dependency for one function
 }
 
+// Function to enhance hotspots after they're rendered
+function enhanceHotspots() {
+    // Wait a moment for Pannellum to render hotspots
+    setTimeout(function() {
+        // Find all hotspot elements
+        const hotspots = document.querySelectorAll('.pnlm-hotspot');
+        
+        // Enhance each hotspot
+        hotspots.forEach(function(hotspot) {
+            // Add shadow and larger appearance without affecting position
+            const hotspotImg = hotspot.querySelector('.pnlm-sprite');
+            if (hotspotImg) {
+                hotspotImg.style.width = '60px';
+                hotspotImg.style.height = '10px';
+                hotspotImg.style.filter = 'drop-shadow(0 4px 8px rgba(0,0,0,0.7))';
+            }
+            
+            // Add our custom class for additional styling
+            hotspot.classList.add('enhanced-hotspot');
+        });
+    }, 500);
+}
+
+// Original initializeVirtualTour function
 function initializeVirtualTour() {
     window.viewer = pannellum.viewer('panorama', {
         "default": {
@@ -291,14 +328,25 @@ function initializeVirtualTour() {
         },
         "scenes": Object.assign({}, scenes)
     });
+	// Sets the initial scene as 73, as for some reason the school drone one would completely break the viewer if it was set as the first scene
+	// Thanks????
+	// I guess???
+	// Javscript !
+	// It gets replaced with the white one later anyway so its chill
     
     // Initialize the tour
     initializeSchoolTour();
     
+    // Apply hotspot enhancements after initialization
+    enhanceHotspots();
+    
+    // Also enhance hotspots after scene changes
+    window.viewer.on('scenechange', function() {
+        enhanceHotspots();
+    });
+    
     // Initialize the review system immediately after DOM is fully loaded
-    // Don't rely on Pannellum's events which might not work as expected
     document.addEventListener('DOMContentLoaded', function() {
-        // Run review system initialization 
         initializeReviewSystem();
     });
     
@@ -313,4 +361,5 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
     setTimeout(initializeReviewSystem, 100);
 }
 
+// Go!!
 window.onload = initializeVirtualTour;
